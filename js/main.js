@@ -1,17 +1,20 @@
 import { descriptions, hashtags, messages, userNames } from "./constants.js";
 import { getRandomElement, getRandomNumber } from "../js/func.js";
 
+const countElement = 25;
+
 function getUrl(id) {
   return `photos/${id}.jpg`;
 }
 
+const hashtagsCount = {
+  min: 2,
+  max: 4,
+};
 function getDescription() {
   const description = getRandomElement(descriptions);
-
   let resultHashtag = [];
-  const minCount = 2;
-  const maxCount = 4;
-  const countHashtag = getRandomNumber(minCount, maxCount);
+  const countHashtag = getRandomNumber(hashtagsCount.min, hashtagsCount.max);
   while (resultHashtag.length < countHashtag) {
     const hashtag = getRandomElement(hashtags);
     if (!resultHashtag.includes(hashtag)) {
@@ -21,18 +24,21 @@ function getDescription() {
   return `${description} ${resultHashtag.join("")}`;
 }
 
-export function getLikes() {
-  const minLikes = 15;
-  const maxLikes = 200;
-  const countLikes = getRandomNumber(minLikes, maxLikes);
-  return countLikes;
+const likesCount = {
+  min: 15,
+  max: 200,
+};
+function getLikes() {
+  return getRandomNumber(likesCount.min, likesCount.max);
 }
 
-export function getMessage() {
+const messagesCount = {
+  min: 1,
+  max: 2,
+};
+function getMessage() {
   let resultMessage = [];
-  const minCount = 1;
-  const maxCount = 2;
-  const countMessage = getRandomNumber(minCount, maxCount);
+  const countMessage = getRandomNumber(messagesCount.min, messagesCount.max);
   while (resultMessage.length < countMessage) {
     const message = getRandomElement(messages);
     if (!resultMessage.includes(message)) {
@@ -42,31 +48,55 @@ export function getMessage() {
   return `${resultMessage.join(" ")}`;
 }
 
-export function getAvatar() {
-  const min = 1;
-  const max = 6;
-  const id = getRandomNumber(min, max);
+const avatarId = {
+  min: 1,
+  max: 6,
+};
+function getAvatar() {
+  const id = getRandomNumber(avatarId.min, avatarId.max);
   return `img/avatar-${id}.svg`;
 }
 
-export function getUserName() {
+function getUserName() {
   return getRandomElement(userNames);
 }
 
-export function getUserId(i) {
-  let arrayId = [];
-  const min = 1;
-  const max = 1000;
-  const countId = 25;
-  while (arrayId.length < countId) {
-    const id = getRandomNumber(min, max);
-    if (!arrayId.includes(id)) {
-      arrayId.push(id);
-    }
-  }
-  return arrayId[i];
+const usersRange = {
+  min: 1,
+  max: 1000,
+};
+let usersId = [];
+function getUserId() {
+  let newId;
+  do {
+    newId = getRandomNumber(usersRange.min, usersRange.max);
+  } while (usersId.includes(newId));
+  usersId.push(newId);
+  return newId;
 }
 
+function getComment() {
+  return [
+    {
+      userId: getUserId(),
+      avatar: getAvatar(),
+      message: getMessage(),
+      name: getUserName(),
+    },
+  ];
+}
+
+function getComments(count) {
+  const array = Array(count)
+    .fill(null)
+    .map((_, i) => getComment());
+  return array;
+}
+
+const commentsCount = {
+  min: 1,
+  max: 10,
+};
 function getElement(id) {
   return [
     {
@@ -74,24 +104,18 @@ function getElement(id) {
       url: getUrl(id + 1),
       description: getDescription(),
       likes: getLikes(),
-      comments: [
-        {
-          userId: getUserId(id),
-          avatar: getAvatar(),
-          message: getMessage(),
-          name: getUserName(),
-        },
-      ],
+      comments: getComments(
+        getRandomNumber(commentsCount.min, commentsCount.max)
+      ),
     },
   ];
 }
 
-function getArray() {
-  const max = 25;
-  const array = Array(max)
+function getArray(count) {
+  const array = Array(count)
     .fill(null)
     .map((_, i) => getElement(i));
   console.log(array);
 }
-  
-getArray();
+
+getArray(countElement);

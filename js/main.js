@@ -1,5 +1,6 @@
 import { descriptions, hashtags, messages, userNames } from "./constants.js";
 import { getRandomElement, getRandomNumber } from "../js/func.js";
+import { createThumbnails } from "../js/thumbnails.js";
 
 const countElement = 25;
 
@@ -98,24 +99,31 @@ const commentsCount = {
   max: 10,
 };
 function getElement(id) {
-  return [
-    {
-      id: id + 1,
-      url: getUrl(id + 1),
-      description: getDescription(),
-      likes: getLikes(),
-      comments: getComments(
-        getRandomNumber(commentsCount.min, commentsCount.max)
-      ),
-    },
-  ];
+  return {
+    id: id + 1,
+    url: getUrl(id + 1),
+    description: getDescription(),
+    likes: getLikes(),
+    comments: getComments(
+      getRandomNumber(commentsCount.min, commentsCount.max)
+    ),
+  };
 }
 
 function getArray(count) {
   const array = Array(count)
     .fill(null)
     .map((_, i) => getElement(i));
-  console.log(array);
+  return array;
 }
 
-getArray(countElement);
+const elements = getArray(countElement);
+console.log(elements);
+
+function showThumbnails(elements) {
+  const pictures = document.querySelector(".pictures");
+  const thumbnails = createThumbnails(elements);
+  pictures.appendChild(thumbnails);
+}
+
+showThumbnails(elements);

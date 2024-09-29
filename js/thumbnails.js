@@ -1,5 +1,6 @@
 function createThumbnail(element) {
   const template = document.querySelector("#picture").content.cloneNode(true);
+  template.querySelector('.picture__img').setAttribute('data-id',element.id);
   template.querySelector(".picture__img").src = element.url;
   template.querySelector(".picture__comments").innerText = element.comments.length;
   template.querySelector(".picture__likes").innerText = element.likes;

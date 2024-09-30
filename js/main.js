@@ -15,6 +15,7 @@ function showThumbnails(elements) {
 
 showThumbnails(elements);
 
+
 const parentElement = document.querySelector(".pictures");
 parentElement.addEventListener("click", (evt) => {
     const id = +evt.target.dataset.id;

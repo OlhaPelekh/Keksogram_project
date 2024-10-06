@@ -2,6 +2,7 @@ import { getArray } from "../js/elements.js";
 import { createThumbnails } from "../js/thumbnails.js";
 import { openBigPicture } from "../js/bigPhoto.js";
 import { events } from "../js/validation.js";
+import { changeImageScale, changeImageEffect } from "./stylePhoto.js";
 
 const countElement = 25;
 
@@ -16,12 +17,14 @@ function showThumbnails(elements) {
 
 showThumbnails(elements);
 
-
 const parentElement = document.querySelector(".pictures");
 parentElement.addEventListener("click", (evt) => {
-    const id = +evt.target.dataset.id;
-    const selectedElements = elements.find((element) => element.id === id);
-    openBigPicture(selectedElements);
+  const id = +evt.target.dataset.id;
+  const selectedElements = elements.find((element) => element.id === id);
+  openBigPicture(selectedElements);
 });
 
 events();
+
+changeImageScale();
+changeImageEffect();

@@ -50,3 +50,5 @@ export const userNames = [
   " Дмитро",
   "Анастасія",
 ];
+
+export const countElement = 25;

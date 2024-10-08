@@ -92,7 +92,6 @@ function uploadImage(evt){
       const imagePreview = document.querySelector(".img-upload__preview img");
       imagePreview.src = e.target.result;
       resetStyles();
-      document.querySelector(".img-upload__overlay").classList.remove("hidden");
     };
     reader.readAsDataURL(file);
   }

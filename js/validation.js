@@ -65,7 +65,41 @@ function closeBigPictureEsc(evt) {
   }
 }
 
+function resetStyles() {
+  const imagePreview = document.querySelector(".img-upload__preview img");
+  const scaleValue = document.querySelector(".scale__control--value");
+  const sliderElement = document.querySelector(".effect-level__slider");
+  const effectLevelValue = document.querySelector(".effect-level__value");
+
+  let currentScale = 1;
+  scaleValue.setAttribute("value", "100%");
+  imagePreview.style.transform = `scale(${currentScale})`;
+
+  imagePreview.style.filter = "none";
+  imagePreview.className = "";
+
+  sliderElement.classList.add("hidden");
+  effectLevelValue.value = 0;
+
+  document.querySelector("#effect-none").checked = true;
+}
+
+function uploadImage(evt){
+  const file = evt.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imagePreview = document.querySelector(".img-upload__preview img");
+      imagePreview.src = e.target.result;
+      resetStyles();
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
 export function events() {
+  document.querySelector("#upload-file").addEventListener("change", uploadImage);
+
   document
     .querySelector("#upload-select-image")
     .addEventListener("submit", (event) => {

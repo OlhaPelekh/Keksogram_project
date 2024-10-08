@@ -7,11 +7,21 @@ function createThumbnail(element) {
   return template;
 }
 
-export function createThumbnails(elements) {
+function createThumbnails(elements) {
   const fragment = document.createDocumentFragment();
   elements.forEach((temp) => {
     const thumbnail = createThumbnail(temp);
     fragment.appendChild(thumbnail);
   });
   return fragment;
+}
+
+export function showThumbnails(elements) {
+  const pictures = document.querySelector(".pictures");
+
+  const existingPictures = pictures.querySelectorAll(".picture");
+  existingPictures.forEach((picture) => picture.remove());
+
+  const thumbnails = createThumbnails(elements);
+  pictures.appendChild(thumbnails);
 }

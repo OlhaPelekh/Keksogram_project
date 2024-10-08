@@ -19,7 +19,7 @@ function getDescription() {
       resultHashtag.push(hashtag);
     }
   }
-  return `${description} ${resultHashtag.join("")}`;
+  return `${description} ${resultHashtag.join(" ")}`;
 }
 
 const likesCount = {

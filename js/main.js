@@ -1,21 +1,18 @@
 import { getArray } from "../js/elements.js";
-import { createThumbnails } from "../js/thumbnails.js";
+import { showThumbnails } from "../js/thumbnails.js";
 import { openBigPicture } from "../js/bigPhoto.js";
 import { events } from "../js/validation.js";
 import { changeImageScale, changeImageEffect } from "./stylePhoto.js";
-
-const countElement = 25;
+import { handleFilterClick } from "../js/filterPhoto.js";
+import {countElement} from "../js/constants.js"
 
 const elements = getArray(countElement);
 console.log(elements);
 
-function showThumbnails(elements) {
-  const pictures = document.querySelector(".pictures");
-  const thumbnails = createThumbnails(elements);
-  pictures.appendChild(thumbnails);
-}
-
 showThumbnails(elements);
+
+const parentFilters = document.querySelector(".img-filters");
+parentFilters.addEventListener("click", handleFilterClick);
 
 const parentElement = document.querySelector(".pictures");
 parentElement.addEventListener("click", (evt) => {
